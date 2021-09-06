@@ -1,11 +1,23 @@
-import axios from "axios";
 import React, { useCallback, useState } from "react";
+import { toast } from "react-toastify";
+import { postLogin } from "./api/api";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const login = useCallback(() => {
-    axios.post("http://localhost:3001/auth/signin", { username, password });
+  const login = useCallback(async () => {
+    const data = { username, password };
+
+    const res = await postLogin(data);
+    if (res.success) {
+      toast("登陆成功", {
+        position: "top-center",
+        autoClose: 5000,
+        onClose: () => {
+          window.location.reload();
+        },
+      });
+    }
   }, [username, password]);
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();

@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { postLogin } from "./api/api";
@@ -5,6 +6,7 @@ import { postLogin } from "./api/api";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
   const login = useCallback(async () => {
     const data = { username, password };
 
@@ -12,13 +14,13 @@ const Login = () => {
     if (res.success) {
       toast("登陆成功", {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 500,
         onClose: () => {
-          window.location.reload();
+          router.push("/");
         },
       });
     }
-  }, [username, password]);
+  }, [username, password, router]);
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     login();

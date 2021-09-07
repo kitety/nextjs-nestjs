@@ -1,20 +1,23 @@
+import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import axiosInstance from "../lib/request";
 import { postLogout } from "./api/api";
 
 const Login = () => {
+  const router = useRouter();
+
   const logout = useCallback(async () => {
     const res = await postLogout();
     console.log("res: ", res);
     toast("退出成功", {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 500,
       onClose: () => {
-        window.location.reload();
+        router.push("/");
       },
     });
-  }, []);
+  }, [router]);
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     logout();
@@ -22,15 +25,9 @@ const Login = () => {
   return (
     <div>
       <div>logout</div>
-      <form>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleSubmit}
-        >
-          Logout
-        </button>
-      </form>
+      <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+        Logout
+      </button>
     </div>
   );
 };

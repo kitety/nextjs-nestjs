@@ -1,28 +1,34 @@
+import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import axiosInstance from "../lib/request";
+import { postRegister } from "./api/api";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
   const register: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     async (e) => {
       e.preventDefault();
-      const res = await axiosInstance.post(
-        "http://localhost:3001/auth/signup",
-        {
-          username,
-          password,
-        }
-      );
+      const res = await postRegister({
+        username,
+        password,
+      });
       console.log("res: ", res);
-      toast("登陆成功", {
+      const text = res.success ? "注册成功" : "注册失败";
+      toast(text, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 500,
+        onClose: () => {
+          if (res.success) {
+            router.push("/");
+          }
+        },
       });
       console.log("username: ", username);
     },
-    [username, password]
+    [username, password, router]
   );
   return (
     <div>

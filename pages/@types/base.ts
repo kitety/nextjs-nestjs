@@ -1,5 +1,5 @@
 export interface IRes<T> {
-  code: string;
+  c: string;
   m: string;
   d: T;
   success: boolean;

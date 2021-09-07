@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { postResetPwd } from "./api/api";
@@ -5,6 +6,8 @@ import { postResetPwd } from "./api/api";
 const Login = () => {
   const [oldPassword, setOldPwd] = useState("");
   const [newPassword, setNewPwd] = useState("");
+  const router = useRouter();
+
   const reset = useCallback(async () => {
     const data = { oldPassword, newPassword };
 
@@ -12,18 +15,13 @@ const Login = () => {
     if (res.success) {
       toast("重置成功", {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 500,
         onClose: () => {
-          window.location.reload();
+          router.push("/");
         },
       });
-    } else {
-      toast("重置失败", {
-        position: "top-center",
-        autoClose: 5000,
-      });
     }
-  }, [oldPassword, newPassword]);
+  }, [oldPassword, newPassword, router]);
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if (oldPassword !== newPassword) {
@@ -31,10 +29,7 @@ const Login = () => {
     } else {
       toast("新旧密码一样", {
         position: "top-center",
-        autoClose: 5000,
-        onClose: () => {
-          window.location.reload();
-        },
+        autoClose: 500,
       });
     }
   };
@@ -43,7 +38,7 @@ const Login = () => {
       <div>reset password</div>
       <form>
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">userName</label>
+          <label htmlFor="exampleInputEmail1">oldPassword</label>
           <input
             value={oldPassword}
             onChange={(e) => setOldPwd(e.target.value)}
@@ -54,7 +49,7 @@ const Login = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Password</label>
+          <label htmlFor="exampleInputPassword1">NewPassword</label>
           <input
             value={newPassword}
             onChange={(e) => setNewPwd(e.target.value)}

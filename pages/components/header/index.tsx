@@ -1,8 +1,18 @@
-import React, {  } from "react";
+import React, { useCallback, useEffect } from "react";
 import Link from "next/link";
 import { getUser } from "../../api/api";
+import { GetServerSideProps } from "next";
 
-const Header = ({ username }: { username?: string }) => {
+const Header = () => {
+  const [username, setUsername] = React.useState("");
+  const fetchUser = useCallback(async () => {
+    const res = await getUser();
+    console.log("res: ", res);
+    setUsername(res.d.username);
+  }, []);
+  useEffect(() => {
+    fetchUser();
+  });
   return (
     <div>
       <div className="row">
@@ -13,40 +23,41 @@ const Header = ({ username }: { username?: string }) => {
             </button>
           </Link>
         </div>
-        {/* {username ? ( */}
-        <div className="col-md-3">
-          <Link href="/logout" passHref>
-            <button type="button" className="btn btn-primary">
-              logout
-            </button>
-          </Link>
-        </div>
-        {/* ) : ( */}
-        <>
-          <div className="col-md-3">
-            <Link href="/register" passHref>
-              <button type="button" className="btn btn-primary">
-                register
-              </button>
-            </Link>
-          </div>
-          <div className="col-md-3">
-            <Link href="/login" passHref>
-              <button type="button" className="btn btn-primary">
-                login
-              </button>
-            </Link>
-          </div>
-        </>
-        {/* )} */}
-
-        <div className="col-md-3">
-          <Link href="/reset" passHref>
-            <button type="button" className="btn btn-primary">
-              reset
-            </button>
-          </Link>
-        </div>
+        {username ? (
+          <>
+            <div className="col-md-3">
+              <Link href="/logout" passHref>
+                <button type="button" className="btn btn-primary">
+                  logout
+                </button>
+              </Link>
+            </div>
+            <div className="col-md-3">
+              <Link href="/reset" passHref>
+                <button type="button" className="btn btn-primary">
+                  reset
+                </button>
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="col-md-3">
+              <Link href="/register" passHref>
+                <button type="button" className="btn btn-primary">
+                  register
+                </button>
+              </Link>
+            </div>
+            <div className="col-md-3">
+              <Link href="/login" passHref>
+                <button type="button" className="btn btn-primary">
+                  login
+                </button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
       <div className="row">
         <span>状态:</span>
@@ -55,11 +66,9 @@ const Header = ({ username }: { username?: string }) => {
     </div>
   );
 };
-export async function getServerSideProps() {
-  const res = await getUser();
-  return {
-    props: { username: res.d?.username }, // will be passed to the page component as props
-  };
-}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   await console.log("context: ", context.req.headers.cookie);
+//   return { name: "1" };
+// };
 
 export default Header;

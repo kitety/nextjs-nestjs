@@ -27,13 +27,13 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response;
 
-    const { code: c, m: errMessage } = data as IRes<AxiosResponse<unknown>>;
+    const { c, m: errMessage } = data as IRes<AxiosResponse<unknown>>;
     data.success = c === API_SUCCESS_CODE;
 
     if (!data.success) {
       toast(errMessage, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 500,
       });
     }
     // 获取数据成功 返回response
@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
     console.log("error: ", error.response?.data.message);
     toast(error.response?.data?.message, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 500,
     });
     return Promise.reject({
       code: 500,

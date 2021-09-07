@@ -7,8 +7,13 @@ export function postLogin(data: {
 }): Promise<IRes<ILoginReq>> {
   return axiosInstance.post("/auth/signin", data);
 }
+export function postRegister(data: {
+  username: string;
+  password: string;
+}): Promise<IRes<ILoginReq>> {
+  return axiosInstance.post("/auth/signup", data);
+}
 export function getUser(): Promise<IRes<{ username: string }>> {
-  console.log("username: ", 111);
   return axiosInstance.get("/auth/getUser");
 }
 

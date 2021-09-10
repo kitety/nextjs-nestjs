@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
   },
   () => {
     return Promise.reject({
-      code: 500,
+      code: 1000,
       message: "请求失败",
     });
   }
@@ -33,22 +33,22 @@ axiosInstance.interceptors.response.use(
     if (!data.success) {
       toast(errMessage, {
         position: "top-center",
-        autoClose: 500,
+        autoClose: 1000,
       });
     }
     // 获取数据成功 返回response
     return data;
   },
   (error: AxiosError) => {
-    console.log("error: ", error.response?.data.message);
-    toast(error.response?.data?.message, {
+    console.log("error: ", error.response?.data.message.join());
+    toast(error.response?.data?.message?.join(), {
       position: "top-center",
-      autoClose: 500,
+      autoClose: 1000,
     });
     return Promise.reject({
-      code: 500,
+      code: 1000,
       message: "请求失败",
-    }); //接口500抛出异常（不走页面逻辑）
+    }); //接口1000抛出异常（不走页面逻辑）
   }
 );
 

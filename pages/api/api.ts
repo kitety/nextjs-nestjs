@@ -1,5 +1,6 @@
 import axiosInstance from "../../lib/request";
 import { ILoginReq, IRes } from "../@types/base";
+import qs from "qs";
 
 export function postLogin(data: {
   username: string;
@@ -15,6 +16,11 @@ export function postRegister(data: {
 }
 export function getUser(): Promise<IRes<{ username: string }>> {
   return axiosInstance.get("/auth/getUser");
+}
+export function getUserByJwt(data: {
+  jwt: string;
+}): Promise<IRes<{ username: string }>> {
+  return axiosInstance.post(`/auth/getUserByJwt`, data);
 }
 
 export function postLogout(): Promise<IRes<unknown>> {

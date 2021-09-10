@@ -2,6 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { postLogin } from "./api/api";
+export { getServerSideProps } from "./common/getServerSideProps";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -37,7 +38,7 @@ const Login = () => {
             type="text"
             className="form-control"
             id="exampleInputEmail1"
-            placeholder="Email"
+            placeholder="UserName"
           />
         </div>
         <div className="form-group">

@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import axiosInstance from "../lib/request";
 import { postRegister } from "./api/api";
+export { getServerSideProps } from "./common/getServerSideProps";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -11,22 +12,27 @@ const Register = () => {
   const register: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     async (e) => {
       e.preventDefault();
-      const res = await postRegister({
-        username,
-        password,
-      });
-      console.log("res: ", res);
-      const text = res.success ? "注册成功" : "注册失败";
-      toast(text, {
-        position: "top-center",
-        autoClose: 500,
-        onClose: () => {
-          if (res.success) {
-            router.push("/");
-          }
-        },
-      });
-      console.log("username: ", username);
+      try {
+        const res = await postRegister({
+          username,
+          password,
+        });
+
+        toast("注册成功", {
+          position: "top-center",
+          autoClose: 500,
+          onClose: () => {
+            if (res.success) {
+              router.push("/");
+            }
+          },
+        });
+      } catch {
+        toast("注册失败", {
+          position: "top-center",
+          autoClose: 1000,
+        });
+      }
     },
     [username, password, router]
   );
@@ -42,7 +48,7 @@ const Register = () => {
             type="text"
             className="form-control"
             id="exampleInputEmail1"
-            placeholder="Email"
+            placeholder="UserName"
           />
         </div>
         <div className="form-group">

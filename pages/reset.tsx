@@ -2,6 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { postResetPwd } from "./api/api";
+export { getServerSideProps } from "./common/getServerSideProps";
 
 const Login = () => {
   const [oldPassword, setOldPwd] = useState("");
@@ -29,7 +30,7 @@ const Login = () => {
     } else {
       toast("新旧密码一样", {
         position: "top-center",
-        autoClose: 500,
+        autoClose: 1000,
       });
     }
   };
@@ -40,23 +41,23 @@ const Login = () => {
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">oldPassword</label>
           <input
+            type="password"
             value={oldPassword}
-            onChange={(e) => setOldPwd(e.target.value)}
-            type="text"
             className="form-control"
             id="exampleInputEmail1"
-            placeholder="Email"
+            placeholder="UserName"
+            onChange={(e) => setOldPwd(e.target.value)}
           />
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputPassword1">NewPassword</label>
           <input
-            value={newPassword}
-            onChange={(e) => setNewPwd(e.target.value)}
             type="password"
+            value={newPassword}
             className="form-control"
             id="exampleInputPassword1"
             placeholder="Password"
+            onChange={(e) => setNewPwd(e.target.value)}
           />
         </div>
         <button

@@ -1,18 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { getUser } from "../../api/api";
-import { GetServerSideProps } from "next";
 
-const Header = () => {
-  const [username, setUsername] = React.useState("");
-  const fetchUser = useCallback(async () => {
-    const res = await getUser();
-    console.log("res: ", res);
-    setUsername(res.d.username);
-  }, []);
-  useEffect(() => {
-    fetchUser();
-  });
+interface IHeader {
+  username: string;
+}
+const Header = ({ username }: IHeader) => {
   return (
     <div>
       <div className="row">

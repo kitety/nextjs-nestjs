@@ -12,7 +12,6 @@ function MyApp({
   Component,
   pageProps,
 }: AppProps<InferGetServerSidePropsType<typeof getServerSideProps>>) {
-  console.log("pageProps: ", pageProps);
   const { username } = pageProps?.data?.d || {};
   return (
     <>

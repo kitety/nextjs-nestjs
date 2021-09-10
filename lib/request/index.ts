@@ -40,7 +40,6 @@ axiosInstance.interceptors.response.use(
     return data;
   },
   (error: AxiosError) => {
-    console.log("error: ", error.response?.data.message.join());
     toast(error.response?.data?.message?.join(), {
       position: "top-center",
       autoClose: 1000,

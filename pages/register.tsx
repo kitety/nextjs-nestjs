@@ -12,13 +12,13 @@ const Register = () => {
   const register: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     async (e) => {
       e.preventDefault();
-      try {
-        const res = await postRegister({
-          username,
-          password,
-        });
-
-        toast("注册成功", {
+      const res = await postRegister({
+        username,
+        password,
+      });
+      if (res.success) {
+        const text = res.success ? "注册成功" : "注册失败";
+        toast(text, {
           position: "top-center",
           autoClose: 500,
           onClose: () => {
@@ -26,11 +26,6 @@ const Register = () => {
               router.push("/");
             }
           },
-        });
-      } catch {
-        toast("注册失败", {
-          position: "top-center",
-          autoClose: 1000,
         });
       }
     },

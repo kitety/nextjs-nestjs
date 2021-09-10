@@ -58,9 +58,5 @@ const Header = ({ username }: IHeader) => {
     </div>
   );
 };
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   await console.log("context: ", context.req.headers.cookie);
-//   return { name: "1" };
-// };
 
 export default Header;
